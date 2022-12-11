@@ -1,0 +1,17 @@
+version: "3.6"
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  web:
+    build:
+      context: ./src
+      dockerfile: ./Dockerfile
+    container_name: user-authen-api
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8099:8099"
+    command: gunicorn config.wsgi --workers 4 -b 0.0.0.0:8099
