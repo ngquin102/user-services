@@ -1,3 +1,8 @@
+### The first install requirements  
+Create new env and install 
+```
+pip install -r requirements.txt
+```
 ### How to run 
 ```
 git clone https://github.com/sonnhfit/user-services.git
