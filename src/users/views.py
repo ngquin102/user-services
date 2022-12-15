@@ -1,7 +1,7 @@
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from users.models import User, PaymentMethod, Payments
-from users.serializers import PaymentsSerializer
+from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserSerializer
 
 # Create your views here.
 class PaymentsHistory(APIView):
