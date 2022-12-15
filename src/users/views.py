@@ -5,6 +5,7 @@ from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserS
 
 # Create your views here.
 class PaymentsHistory(APIView):
+    
     def get(self, request, format=None):
         payments = Payments.objects.all()
         serializer = PaymentsSerializer(payments, many=True)

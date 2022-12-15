@@ -9,6 +9,13 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, blank=True, null=True)
 
 
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.FloatField()
+    description = models.TextField()
+    def __str__(self):
+        return self.name
+
 class PaymentMethod(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -25,6 +32,18 @@ class Payments(models.Model):
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
     amount = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username }-{self.amount}"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField()
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username
