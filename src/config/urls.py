@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from users.views import PaymentsHistory
+from users.views import PaymentsHistory, SubscriptionStatus
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     ), name='swagger-ui'),
     
     path('api/payments/', PaymentsHistory.as_view()),
+    path('api/subscription/<int:user_id>/<int:product_id>/', SubscriptionStatus.as_view()),
 ]
