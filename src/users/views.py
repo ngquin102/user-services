@@ -1,9 +1,12 @@
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from users.models import User, PaymentMethod, Payments, Product, Subscription
-from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserSerializer, SubscriptionSerializer, ProductSerializer
-from .serializers import InforSerializer
+from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserSerializer, SubscriptionSerializer
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+
 # Create your views here.
 class PaymentsHistory(APIView):
 
@@ -48,3 +51,35 @@ class SubscriptionStatus(APIView):
             else:
                 response_data["subscription_status"] = False
                 return Response(response_data, status=200)
+
+
+class CheckSubcriptionAPI(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, product_id, format=None):
+        user = request.user
+        subscription = Subscription.objects.filter(user=user, product=product_id, active=True).first()
+        response_data = {}
+
+        if subscription:
+
+            response_data = {
+                "user": {
+                    "username": user.username,
+                    "email": user.email,
+                    "phone_number": user.phone_number
+                },
+                "subscription": {
+                    "product": subscription.product_id,
+                    "payment_method": subscription.payment_method_id,
+                    "start_date": subscription.start_date,
+                    "end_date": subscription.end_date,
+                    "active": subscription.active
+                }
+            }
+            response_data["subscription_status"] = True
+            return Response(response_data, status=200)
+        else:
+            response_data["subscription_status"] = False
+            return Response(response_data, status=200)

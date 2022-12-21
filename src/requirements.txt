@@ -15,3 +15,5 @@ celery==5.2.7
 flake8==6.0.0
 isort==5.10.1
 black==22.10.0
+
+djangorestframework-simplejwt==5.2.2
