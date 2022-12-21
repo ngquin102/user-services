@@ -21,12 +21,11 @@ from users.views import PaymentsHistory, SubscriptionStatus
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('users.urls')),
     path('docs/', TemplateView.as_view(
         template_name='swagger-ui.html',
         extra_context={'schema_url':'openapi-schema'}
     ), name='swagger-ui'),
-    
     path('api/payments/', PaymentsHistory.as_view()),
     path('api/subscription/<int:user_id>/<int:product_id>/', SubscriptionStatus.as_view()),
 ]

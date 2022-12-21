@@ -1,12 +1,9 @@
 from rest_framework.views import APIView 
 from rest_framework.response import Response
-from users.models import User, PaymentMethod, Payments, Subscription
-from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserSerializer, SubscriptionSerializer
-import datetime
-import logging 
-
-logger = logging.getLogger(__name__)
-
+from users.models import User, PaymentMethod, Payments, Product, Subscription
+from users.serializers import PaymentsSerializer, PaymentMethodSerializer, UserSerializer, SubscriptionSerializer, ProductSerializer
+from .serializers import InforSerializer
+from rest_framework import status
 # Create your views here.
 class PaymentsHistory(APIView):
 
